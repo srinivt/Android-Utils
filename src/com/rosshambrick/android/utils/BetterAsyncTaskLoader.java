@@ -13,7 +13,6 @@ public abstract class BetterAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
     @Override
     public void deliverResult(T data) {
         if (isReset()) {
-            // An async query came in while the loader is stopped
             return;
         }
 
