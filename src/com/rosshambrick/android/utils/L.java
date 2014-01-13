@@ -10,13 +10,25 @@ public class L {
     //DEBUG
     public static void d(Object object, String message, Exception e) {
         if (BuildConfig.DEBUG) {
-            Log.d(object.getClass().getSimpleName(), message, e);
+            d(object.getClass().getSimpleName(), message, e);
         }
     }
 
     public static void d(Object object, String message) {
         if (BuildConfig.DEBUG) {
-            Log.d(object.getClass().getSimpleName(), message);
+            d(object.getClass().getSimpleName(), message);
+        }
+    }
+
+    public static void d(String tag, String message, Exception e) {
+        if (BuildConfig.DEBUG) {
+            Log.d(tag, message, e);
+        }
+    }
+
+    public static void d(String tag, String message) {
+        if (BuildConfig.DEBUG) {
+            Log.d(tag, message);
         }
     }
 
