@@ -1,6 +1,7 @@
 package com.rosshambrick.android.utils;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -51,13 +52,13 @@ public class L {
             if (object instanceof android.support.v4.app.Fragment) {
                 toastOnMainThread(((android.support.v4.app.Fragment) object).getActivity(), message);
             }
-            if (object instanceof android.app.Fragment) {
+            if (object instanceof android.app.Fragment && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 toastOnMainThread(((android.app.Fragment) object).getActivity(), message);
             }
             if (object instanceof android.support.v4.content.Loader) {
                 toastOnMainThread(((android.support.v4.content.Loader) object).getContext(), message);
             }
-            if (object instanceof android.content.Loader) {
+            if (object instanceof android.content.Loader && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 toastOnMainThread(((android.content.Loader) object).getContext(), message);
             }
         }
@@ -71,4 +72,23 @@ public class L {
             }
         });
     }
+
+    //INFO
+    public static void i(Object object, String message) {
+        Log.i(object.getClass().getSimpleName(), message);
+    }
+
+    public static void i(Object object, String message, Exception e) {
+        Log.i(object.getClass().getSimpleName(), message, e);
+    }
+
+    //WARN
+    public static void w(Object object, String message) {
+        Log.w(object.getClass().getSimpleName(), message);
+    }
+
+    public static void w(Object object, String message, Exception e) {
+        Log.w(object.getClass().getSimpleName(), message, e);
+    }
+
 }
