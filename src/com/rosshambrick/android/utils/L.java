@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class L {
     //DEBUG
-    public static void d(Object object, String message, Exception e) {
+    public static void d(Object object, String message, Throwable e) {
         if (BuildConfig.DEBUG) {
             d(object.getClass().getSimpleName(), message, e);
         }
@@ -21,7 +21,7 @@ public class L {
         }
     }
 
-    public static void d(String tag, String message, Exception e) {
+    public static void d(String tag, String message, Throwable e) {
         if (BuildConfig.DEBUG) {
             Log.d(tag, message, e);
         }
@@ -34,7 +34,7 @@ public class L {
     }
 
     //ERROR
-    public static void e(Object object, String message, Exception e) {
+    public static void e(Object object, String message, Throwable e) {
         Log.e(object.getClass().getSimpleName(), message, e);
         toastIfDebug(object, message);
     }
@@ -42,6 +42,10 @@ public class L {
     public static void e(Object object, String message) {
         Log.e(object.getClass().getSimpleName(), message);
         toastIfDebug(object, message);
+    }
+
+    public static void e(Object object, Exception e) {
+        e(object, e.getMessage(), e);
     }
 
     private static void toastIfDebug(Object object, String message) {
@@ -78,7 +82,7 @@ public class L {
         Log.i(object.getClass().getSimpleName(), message);
     }
 
-    public static void i(Object object, String message, Exception e) {
+    public static void i(Object object, String message, Throwable e) {
         Log.i(object.getClass().getSimpleName(), message, e);
     }
 
@@ -87,7 +91,7 @@ public class L {
         Log.w(object.getClass().getSimpleName(), message);
     }
 
-    public static void w(Object object, String message, Exception e) {
+    public static void w(Object object, String message, Throwable e) {
         Log.w(object.getClass().getSimpleName(), message, e);
     }
 
