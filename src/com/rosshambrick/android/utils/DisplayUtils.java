@@ -8,8 +8,8 @@ public class DisplayUtils {
         return pixels / context.getResources().getDisplayMetrics().density;
     }
 
-    public static float pixelsFromDp(Context context, int pixels) {
-        return pixels * context.getResources().getDisplayMetrics().density;
+    public static float pixelsFromDp(Context context, int dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
     }
 
     public static int getScreenWidthInPixels(Context context) {
