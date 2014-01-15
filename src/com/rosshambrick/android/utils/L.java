@@ -10,15 +10,11 @@ import android.widget.Toast;
 public class L {
     //DEBUG
     public static void d(Object object, String message, Throwable e) {
-        if (BuildConfig.DEBUG) {
-            d(object.getClass().getSimpleName(), message, e);
-        }
+        d(object.getClass().getName(), message, e);
     }
 
     public static void d(Object object, String message) {
-        if (BuildConfig.DEBUG) {
-            d(object.getClass().getSimpleName(), message);
-        }
+        d(object.getClass().getName(), message);
     }
 
     public static void d(String tag, String message, Throwable e) {
