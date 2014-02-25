@@ -1,59 +1,71 @@
 package com.rosshambrick.android.utils;
 
+import android.app.AlertDialog;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
-public abstract class BetterAsyncTask<TProgress, TResult> extends AsyncTask<Object, TProgress, AsyncTaskResult<TResult>> {
-    private AsyncTaskListener mListener = null;
+public abstract class BetterAsyncTask<TProgress, TResult> extends AsyncTask<Void, TProgress, Result<TResult>> {
+    public static final String TAG = "BetterAsyncTask";
+    private Fragment mFragment;
+    protected AlertDialog mDialog;
 
-    public BetterAsyncTask(AsyncTaskListener<TResult> listener) {
-        mListener = listener;
+    public BetterAsyncTask(Fragment fragment) {
+        mFragment = fragment;
     }
 
     @Override
-    protected AsyncTaskResult<TResult> doInBackground(Object... params) {
-        TResult tResult = null;
+    protected void onPreExecute() {
+        mDialog = new AlertDialog.Builder(mFragment.getActivity()).setMessage("Please wait...").show();
+    }
+
+    @Override
+    protected Result<TResult> doInBackground(Void... params) {
+        TResult result = null;
         Throwable error = null;
         try {
-            tResult = doBackgroundWork(params);
+            result = doBackgroundWork();
         } catch (Throwable e) {
             error = e;
         }
 
-        if (error == null && tResult == null) {
-            error = new RuntimeException("Result from background work was null");
-        }
-        return new AsyncTaskResult<TResult>(tResult, error);
+        return new Result<TResult>(result, error);
     }
 
-    protected abstract TResult doBackgroundWork(Object... params) throws Throwable;
+    protected abstract TResult doBackgroundWork() throws Throwable;
 
     @Override
-    protected void onPostExecute(AsyncTaskResult<TResult> taskResult) {
-        if (mListener != null) {
-            if (taskResult.getError() != null) {
-                mListener.onError(taskResult.getError());
-            } else {
-                mListener.onSuccess(taskResult.getResult());
-            }
+    protected void onPostExecute(Result<TResult> taskResult) {
+        if (taskResult.getError() != null) {
+            onError(taskResult.getError());
+        } else {
+            onSuccess(taskResult.getResult());
         }
-        mListener.onFinished();
+        onFinished();
     }
 
-    public interface AsyncTaskListener<T> {
-        void onSuccess(T result);
+    void onSuccess(TResult result) {
+        //do nothing by default
+    }
 
-        void onError(Throwable error);
+    void onError(Throwable error) {
+        Toast.makeText(mFragment.getActivity(), "Task error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+    }
 
-        void onFinished();
+    void onFinished() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
     }
 
 }
 
-class AsyncTaskResult<T> {
+
+class Result<T> {
     private Throwable mError;
     private T mResult;
 
-    public AsyncTaskResult(T result, Throwable error) {
+    public Result(T result, Throwable error) {
         mResult = result;
         mError = error;
     }

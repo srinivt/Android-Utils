@@ -31,12 +31,12 @@ public class L {
 
     //ERROR
     public static void e(Object object, String message, Throwable e) {
-        Log.e(object.getClass().getSimpleName(), message, e);
+        Log.e(object.getClass().getName(), message, e);
         toastIfDebug(object, message);
     }
 
     public static void e(Object object, String message) {
-        Log.e(object.getClass().getSimpleName(), message);
+        Log.e(object.getClass().getName(), message);
         toastIfDebug(object, message);
     }
 
@@ -75,20 +75,20 @@ public class L {
 
     //INFO
     public static void i(Object object, String message) {
-        Log.i(object.getClass().getSimpleName(), message);
+        Log.i(object.getClass().getName(), message);
     }
 
     public static void i(Object object, String message, Throwable e) {
-        Log.i(object.getClass().getSimpleName(), message, e);
+        Log.i(object.getClass().getName(), message, e);
     }
 
     //WARN
     public static void w(Object object, String message) {
-        Log.w(object.getClass().getSimpleName(), message);
+        Log.w(object.getClass().getName(), message);
     }
 
     public static void w(Object object, String message, Throwable e) {
-        Log.w(object.getClass().getSimpleName(), message, e);
+        Log.w(object.getClass().getName(), message, e);
     }
 
 }
