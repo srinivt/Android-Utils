@@ -16,12 +16,15 @@ public class DialogFactory {
                         .setTitle(title)
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok, null)
+                        .setCancelable(false)
                         .create();
             }
         };
     }
 
-    public static DialogFragment createOkCancel(final Context context, final int title, final int message, final DialogInterface.OnClickListener okListener, final DialogInterface.OnClickListener cancelListener) {
+    public static DialogFragment createOkCancel(final Context context, final int title, final int message,
+                                                final DialogInterface.OnClickListener okListener,
+                                                final DialogInterface.OnClickListener cancelListener) {
         return new DialogFragment(){
             @Override
             public Dialog onCreateDialog(Bundle savedInstanceState) {
