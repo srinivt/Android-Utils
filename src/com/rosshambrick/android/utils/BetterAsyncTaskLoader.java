@@ -11,37 +11,8 @@ public abstract class BetterAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
     }
 
     @Override
-    public void deliverResult(T data) {
-        if (isReset()) {
-            return;
-        }
-
-        mData = data;
-
-        super.deliverResult(data);
-    }
-
-    @Override
     protected void onStartLoading() {
-        if (mData != null) {
-            deliverResult(mData);
-        }
-
-        if (takeContentChanged() || mData == null) {
-            forceLoad();
-        }
-    }
-
-    @Override
-    protected void onStopLoading() {
-        cancelLoad();
-    }
-
-    @Override
-    protected void onReset() {
-        super.onReset();
-        onStopLoading();
-        mData = null;
+        forceLoad();
     }
 
 }
